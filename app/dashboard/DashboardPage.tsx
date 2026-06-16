@@ -6,7 +6,7 @@ import {
   Tooltip, ResponsiveContainer,
 } from "recharts";
 import { ThemeConfig } from "../lib/theme";
-import { logsPerHour, attackData, logsData } from "../lib/data"; // where needed
+import { logsPerHour, attackData, logsData } from "../lib/data";
 
 type Props = {
   tc: ThemeConfig;
@@ -19,24 +19,47 @@ export default function DashboardPage({ tc, isLight, onViewLogs }: Props) {
     backgroundColor: tc.tooltipBg,
     border: `1px solid ${tc.tooltipBorder}`,
     borderRadius: "10px",
-    fontSize: "11px",
+    fontSize: "clamp(11px, 0.85vw, 13px)",
     color: isLight ? "#374151" : "#d1d5db",
     boxShadow: "0 4px 16px rgba(0,0,0,0.35)",
   };
 
   return (
-    <div className="animate-in fade-in duration-400 space-y-5">
+    <div className="animate-in fade-in duration-400 space-y-6">
 
-      {/* Welcome */}
-      <div>
-        <h1 className={`text-xl lg:text-[22px] font-semibold tracking-tight ${tc.heading}`}>
-          Welcome to CYLIS.
+      {/* ── Welcome banner ── */}
+      <div
+        className={`rounded-2xl px-6 py-5 lg:px-8 lg:py-6 relative overflow-hidden ${tc.card}`}
+        style={{ boxShadow: `0 0 40px rgba(${tc.accentRgb},0.06)` }}
+      >
+        {/* Decorative glow blob */}
+        <div
+          className="absolute -top-8 -right-8 w-48 h-48 rounded-full blur-3xl opacity-20 pointer-events-none"
+          style={{ background: `radial-gradient(circle, ${tc.accent}, transparent)` }}
+        />
+        <p
+          className={`uppercase tracking-widest font-semibold mb-1 ${tc.accentTxt}`}
+          style={{ fontSize: "clamp(10px, 0.7vw, 12px)" }}
+        >
+          Cyber Forensic Control Center
+        </p>
+        <h1
+          className={`font-semibold tracking-tight leading-tight ${tc.heading}`}
+          style={{ fontSize: "clamp(20px, 1.6vw, 28px)" }}
+        >
+          Welcome back. Everything looks stable.
         </h1>
-        
+        <p
+          className={`mt-1.5 flex items-center gap-1.5 ${tc.sub}`}
+          style={{ fontSize: "clamp(12px, 0.85vw, 14px)" }}
+        >
+          Monitor, analyze, and verify threat logs efficiently.
+          <span className={`${tc.accentTxt} cursor-pointer`}>🔗</span>
+        </p>
       </div>
 
-      {/* 4 Stat cards — 2 cols on mobile, 4 on lg */}
-      <div className="grid grid-cols-2 xl:grid-cols-4 gap-3 lg:gap-4">
+      {/* ── 4 Stat cards ── */}
+      <div className="grid grid-cols-2 xl:grid-cols-4 gap-4">
         {[
           { label: "Logs Today",    value: "12,450", delta: "+12%" },
           { label: "Tampered Logs", value: "18",     delta: ""     },
@@ -45,20 +68,30 @@ export default function DashboardPage({ tc, isLight, onViewLogs }: Props) {
         ].map((s, i) => (
           <div
             key={i}
-            className={`rounded-2xl p-4 lg:p-5 relative overflow-hidden ${tc.statCards[i]}`}
+            className={`rounded-2xl relative overflow-hidden ${tc.statCards[i]}`}
+            style={{ padding: "clamp(16px, 1.4vw, 24px)" }}
           >
             <div
-              className="absolute -bottom-4 -right-4 w-20 h-20 rounded-full blur-2xl opacity-30"
+              className="absolute -bottom-4 -right-4 w-24 h-24 rounded-full blur-2xl opacity-30"
               style={{ background: `radial-gradient(circle,${tc.grad1},transparent)` }}
             />
-            <p className={`text-[10px] uppercase tracking-widest mb-1 relative z-10 ${tc.statLbl}`}>
+            <p
+              className={`uppercase tracking-widest mb-2 relative z-10 ${tc.statLbl}`}
+              style={{ fontSize: "clamp(9px, 0.65vw, 11px)" }}
+            >
               {s.label}
             </p>
-            <h3 className={`text-2xl lg:text-3xl font-light tracking-tight relative z-10 ${tc.statVal}`}>
+            <h3
+              className={`font-light tracking-tight relative z-10 ${tc.statVal}`}
+              style={{ fontSize: "clamp(26px, 2.2vw, 36px)" }}
+            >
               {s.value}
             </h3>
             {s.delta && (
-              <span className={`text-[10px] relative z-10 block mt-0.5 ${tc.statDelta}`}>
+              <span
+                className={`relative z-10 block mt-1 ${tc.statDelta}`}
+                style={{ fontSize: "clamp(10px, 0.7vw, 12px)" }}
+              >
                 {s.delta}
               </span>
             )}
@@ -66,23 +99,35 @@ export default function DashboardPage({ tc, isLight, onViewLogs }: Props) {
         ))}
       </div>
 
-      {/* Charts row — stack on mobile, side-by-side on lg */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-5">
+      {/* ── Charts row ── */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
 
         {/* Logs Per Hour */}
-        <div className={`${tc.card} ${tc.cardHov} rounded-2xl p-4 lg:p-5 transition-all`}>
-          <div className="flex items-center justify-between mb-1">
-            <span className={`text-[11px] uppercase tracking-widest font-semibold ${tc.dimTxt}`}>
+        <div className={`${tc.card} ${tc.cardHov} rounded-2xl transition-all`}
+          style={{ padding: "clamp(16px, 1.4vw, 24px)" }}>
+          <div className="flex items-center justify-between mb-2">
+            <span
+              className={`uppercase tracking-widest font-semibold ${tc.dimTxt}`}
+              style={{ fontSize: "clamp(10px, 0.75vw, 12px)" }}
+            >
               Logs Per Hour
             </span>
             <div className="flex items-center gap-3">
-              <span className={`text-[10px] ${tc.muted}`}>Last 24 Hours</span>
-              <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded-md ${tc.btnSec}`}>
+              <span
+                className={tc.muted}
+                style={{ fontSize: "clamp(10px, 0.7vw, 12px)" }}
+              >
+                Last 24 Hours
+              </span>
+              <span
+                className={`font-medium px-2 py-0.5 rounded-md ${tc.btnSec}`}
+                style={{ fontSize: "clamp(10px, 0.7vw, 12px)" }}
+              >
                 3 →
               </span>
             </div>
           </div>
-          <div className="h-[140px] lg:h-[160px] mt-3">
+          <div style={{ height: "clamp(150px, 12vw, 200px)", marginTop: "12px" }}>
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={logsPerHour} margin={{ left: -22, right: 2, top: 4, bottom: 0 }}>
                 <defs>
@@ -93,37 +138,59 @@ export default function DashboardPage({ tc, isLight, onViewLogs }: Props) {
                 </defs>
                 <XAxis
                   dataKey="t" axisLine={false} tickLine={false}
-                  tick={{ fill: isLight ? "#9ca3af" : "#52525b", fontSize: 9 }}
+                  tick={{ fill: isLight ? "#9ca3af" : "#52525b", fontSize: 10 }}
                 />
                 <YAxis
                   axisLine={false} tickLine={false}
-                  tick={{ fill: isLight ? "#9ca3af" : "#52525b", fontSize: 9 }}
+                  tick={{ fill: isLight ? "#9ca3af" : "#52525b", fontSize: 10 }}
                 />
                 <Tooltip contentStyle={tooltip} cursor={{ stroke: tc.accent, strokeWidth: 1, strokeOpacity: 0.3 }} />
                 <Area
-                  type="monotone" dataKey="v" stroke={tc.accent} strokeWidth={1.5}
-                  fill="url(#aGrad)" dot={false} activeDot={{ r: 3, fill: tc.accent }}
+                  type="monotone" dataKey="v" stroke={tc.accent} strokeWidth={2}
+                  fill="url(#aGrad)" dot={false} activeDot={{ r: 4, fill: tc.accent }}
                 />
               </AreaChart>
             </ResponsiveContainer>
           </div>
-          <div className="flex items-baseline gap-2 mt-2">
-            <span className={`text-2xl font-light ${tc.heading}`}>1428</span>
-            <span className={`text-[11px] ${tc.sub}`}>Stable</span>
+          <div className="flex items-baseline gap-2 mt-3">
+            <span
+              className={`font-light ${tc.heading}`}
+              style={{ fontSize: "clamp(22px, 1.8vw, 30px)" }}
+            >
+              1428
+            </span>
+            <span
+              className={tc.sub}
+              style={{ fontSize: "clamp(11px, 0.8vw, 13px)" }}
+            >
+              Stable
+            </span>
           </div>
         </div>
 
         {/* Recent Attack Sources */}
-        <div className={`${tc.card} ${tc.cardHov} rounded-2xl p-4 lg:p-5 transition-all`}>
-          <div className="flex items-center justify-between mb-1">
-            <span className={`text-[11px] uppercase tracking-widest font-semibold ${tc.dimTxt}`}>
+        <div className={`${tc.card} ${tc.cardHov} rounded-2xl transition-all`}
+          style={{ padding: "clamp(16px, 1.4vw, 24px)" }}>
+          <div className="flex items-center justify-between mb-2">
+            <span
+              className={`uppercase tracking-widest font-semibold ${tc.dimTxt}`}
+              style={{ fontSize: "clamp(10px, 0.75vw, 12px)" }}
+            >
               Recent Attack Sources
             </span>
-            <span className={`text-[10px] ${tc.accentTxt} cursor-pointer`}>Last 17 ms →</span>
+            <span
+              className={`${tc.accentTxt} cursor-pointer`}
+              style={{ fontSize: "clamp(10px, 0.7vw, 12px)" }}
+            >
+              Last 17 ms →
+            </span>
           </div>
 
-          {/* World map illustration */}
-          <div className={`relative h-[100px] lg:h-[120px] mt-2 rounded-xl overflow-hidden ${isLight ? "bg-purple-50/50" : "bg-white/[0.02]"}`}>
+          {/* World map */}
+          <div
+            className={`relative mt-2 rounded-xl overflow-hidden ${isLight ? "bg-purple-50/50" : "bg-white/[0.02]"}`}
+            style={{ height: "clamp(100px, 9vw, 150px)" }}
+          >
             <svg viewBox="0 0 400 160" className="w-full h-full opacity-25" preserveAspectRatio="xMidYMid meet">
               {[
                 [60,60],[80,55],[100,60],[120,65],[140,60],[70,75],[90,80],[110,75],
@@ -145,12 +212,17 @@ export default function DashboardPage({ tc, isLight, onViewLogs }: Props) {
           </div>
 
           {/* Top IPs */}
-          <div className="mt-2 space-y-1.5">
+          <div className="mt-3 space-y-2">
             {attackData.slice(0, 3).map((a, i) => (
-              <div key={i} className="flex items-center gap-2">
-                <span className={`text-[10px] font-mono ${tc.sub} w-28 truncate`}>{a.ip}</span>
+              <div key={i} className="flex items-center gap-3">
+                <span
+                  className={`font-mono ${tc.sub} w-32 truncate`}
+                  style={{ fontSize: "clamp(10px, 0.75vw, 12px)" }}
+                >
+                  {a.ip}
+                </span>
                 <div
-                  className="flex-1 h-1 rounded-full overflow-hidden"
+                  className="flex-1 h-1.5 rounded-full overflow-hidden"
                   style={{ background: `rgba(${tc.accentRgb},0.1)` }}
                 >
                   <div
@@ -158,60 +230,95 @@ export default function DashboardPage({ tc, isLight, onViewLogs }: Props) {
                     style={{ width: `${(a.count / 90) * 100}%`, background: tc.accent }}
                   />
                 </div>
-                <span className={`text-[10px] ${tc.sub}`}>{a.count}</span>
+                <span
+                  className={tc.sub}
+                  style={{ fontSize: "clamp(10px, 0.75vw, 12px)" }}
+                >
+                  {a.count}
+                </span>
               </div>
             ))}
           </div>
         </div>
       </div>
 
-      {/* Recent Logs table */}
+      {/* ── Recent Logs table ── */}
       <div className={`${tc.card} ${tc.cardHov} rounded-2xl overflow-hidden transition-all`}>
         <div
-          className="flex items-center justify-between px-4 lg:px-5 py-3.5"
+          className="flex items-center justify-between px-5 lg:px-6 py-4"
           style={{ borderBottom: `1px solid rgba(${tc.accentRgb},0.08)` }}
         >
-          <h4 className={`text-[11px] uppercase tracking-widest font-semibold ${tc.dimTxt}`}>
-            Recent Logs <ChevronRight className="inline w-3 h-3 opacity-60" />
+          <h4
+            className={`uppercase tracking-widest font-semibold flex items-center gap-1 ${tc.dimTxt}`}
+            style={{ fontSize: "clamp(10px, 0.75vw, 12px)" }}
+          >
+            Recent Logs <ChevronRight className="inline w-3.5 h-3.5 opacity-60" />
           </h4>
           <button
             onClick={onViewLogs}
-            className={`text-[10px] uppercase tracking-widest flex items-center gap-1 ${tc.accentTxt} hover:opacity-70 transition-opacity`}
+            className={`uppercase tracking-widest flex items-center gap-1 ${tc.accentTxt} hover:opacity-70 transition-opacity`}
+            style={{ fontSize: "clamp(10px, 0.75vw, 12px)" }}
           >
-            View All <ChevronRight className="w-3 h-3" />
+            View All <ChevronRight className="w-3.5 h-3.5" />
           </button>
         </div>
 
-        {/* Horizontally scrollable on small screens */}
         <div className="overflow-x-auto">
-          <table className="w-full text-left min-w-[560px]">
+          <table className="w-full text-left min-w-[580px]">
             <thead>
               <tr
-                className={`text-[10px] uppercase tracking-[0.12em] ${tc.tblHead}`}
-                style={{ borderBottom: `1px solid rgba(${tc.accentRgb},0.08)` }}
+                className={`uppercase tracking-[0.12em] ${tc.tblHead}`}
+                style={{
+                  fontSize: "clamp(10px, 0.72vw, 12px)",
+                  borderBottom: `1px solid rgba(${tc.accentRgb},0.08)`,
+                }}
               >
                 {["Time", "IP", "IP", "Attack Type", "Integrity", "Status"].map((h) => (
-                  <th key={h} className="px-4 lg:px-5 py-3 font-semibold">{h}</th>
+                  <th key={h} className="px-5 lg:px-6 py-3.5 font-semibold">{h}</th>
                 ))}
               </tr>
             </thead>
-            <tbody className="text-xs">
+            <tbody>
               {logsData.slice(0, 4).map((r, i) => (
                 <tr key={i} className={`transition-colors ${tc.tblRow}`}>
-                  <td className={`px-4 lg:px-5 py-3 font-mono ${tc.sub}`}>{r.time}</td>
-                  <td className={`px-4 lg:px-5 py-3 font-mono ${tc.sub}`}>{r.ip1}</td>
-                  <td className={`px-4 lg:px-5 py-3 font-mono ${tc.sub}`}>{r.ip2}</td>
-                  <td className="px-4 lg:px-5 py-3">
-                    <span className={`px-2 py-0.5 rounded-md text-[10px] font-medium ${tc.pillType}`}>
+                  <td
+                    className={`px-5 lg:px-6 py-3.5 font-mono ${tc.sub}`}
+                    style={{ fontSize: "clamp(11px, 0.8vw, 13px)" }}
+                  >
+                    {r.time}
+                  </td>
+                  <td
+                    className={`px-5 lg:px-6 py-3.5 font-mono ${tc.sub}`}
+                    style={{ fontSize: "clamp(11px, 0.8vw, 13px)" }}
+                  >
+                    {r.ip1}
+                  </td>
+                  <td
+                    className={`px-5 lg:px-6 py-3.5 font-mono ${tc.sub}`}
+                    style={{ fontSize: "clamp(11px, 0.8vw, 13px)" }}
+                  >
+                    {r.ip2}
+                  </td>
+                  <td className="px-5 lg:px-6 py-3.5">
+                    <span
+                      className={`px-2.5 py-1 rounded-md font-medium ${tc.pillType}`}
+                      style={{ fontSize: "clamp(10px, 0.72vw, 12px)" }}
+                    >
                       {r.type}
                     </span>
                   </td>
-                  <td className={`px-4 lg:px-5 py-3 ${r.integrity === "Valid" ? "text-emerald-500" : "text-rose-400"}`}>
+                  <td
+                    className={`px-5 lg:px-6 py-3.5 ${r.integrity === "Valid" ? "text-emerald-500" : "text-rose-400"}`}
+                    style={{ fontSize: "clamp(11px, 0.8vw, 13px)" }}
+                  >
                     {r.integrity}
                   </td>
-                  <td className="px-4 lg:px-5 py-3">
-                    <span className={`px-2 py-0.5 rounded-md text-[10px] font-medium
-                      ${r.statusType === "bad" ? tc.pillBad : r.statusType === "warn" ? tc.pillWarn : tc.pillGood}`}>
+                  <td className="px-5 lg:px-6 py-3.5">
+                    <span
+                      className={`px-2.5 py-1 rounded-md font-medium
+                        ${r.statusType === "bad" ? tc.pillBad : r.statusType === "warn" ? tc.pillWarn : tc.pillGood}`}
+                      style={{ fontSize: "clamp(10px, 0.72vw, 12px)" }}
+                    >
                       {r.status}
                     </span>
                   </td>
