@@ -27,36 +27,6 @@ export default function DashboardPage({ tc, isLight, onViewLogs }: Props) {
   return (
     <div className="animate-in fade-in duration-400 space-y-6">
 
-      {/* ── Welcome banner ── */}
-      <div
-        className={`rounded-2xl px-6 py-5 lg:px-8 lg:py-6 relative overflow-hidden ${tc.card}`}
-        style={{ boxShadow: `0 0 40px rgba(${tc.accentRgb},0.06)` }}
-      >
-        {/* Decorative glow blob */}
-        <div
-          className="absolute -top-8 -right-8 w-48 h-48 rounded-full blur-3xl opacity-20 pointer-events-none"
-          style={{ background: `radial-gradient(circle, ${tc.accent}, transparent)` }}
-        />
-        <p
-          className={`uppercase tracking-widest font-semibold mb-1 ${tc.accentTxt}`}
-          style={{ fontSize: "clamp(10px, 0.7vw, 12px)" }}
-        >
-          Cyber Forensic Control Center
-        </p>
-        <h1
-          className={`font-semibold tracking-tight leading-tight ${tc.heading}`}
-          style={{ fontSize: "clamp(20px, 1.6vw, 28px)" }}
-        >
-          Welcome back. Everything looks stable.
-        </h1>
-        <p
-          className={`mt-1.5 flex items-center gap-1.5 ${tc.sub}`}
-          style={{ fontSize: "clamp(12px, 0.85vw, 14px)" }}
-        >
-          Monitor, analyze, and verify threat logs efficiently.
-          <span className={`${tc.accentTxt} cursor-pointer`}>🔗</span>
-        </p>
-      </div>
 
       {/* ── 4 Stat cards ── */}
       <div className="grid grid-cols-2 xl:grid-cols-4 gap-4">
