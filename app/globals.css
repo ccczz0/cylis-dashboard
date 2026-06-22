@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ─── ROOT FONT SCALE — drives ALL rem sizes uniformly ───────────
+   Everything built with rem (Tailwind default) scales with this.
+   Result: same proportions on every screen, just larger/smaller.
+──────────────────────────────────────────────────────────────── */
+html {
+  font-size: 18px;          /* base — bigger than browser default 16px  */
+}
+@media (max-width: 1400px) { html { font-size: 17px; } }
+@media (max-width: 1280px) { html { font-size: 16px; } }
+@media (max-width: 1100px) { html { font-size: 15px; } }
+@media (max-width: 900px)  { html { font-size: 14px; } }
+@media (max-width: 700px)  { html { font-size: 13px; } }
+
 /* ─── THEME: Dark Gold (default) ─────────────────────────────── */
 [data-theme="dark-gold"] {
   --bg-base:        #111111;
@@ -113,7 +126,7 @@
   --shadow-glow:    0 0 30px rgba(168,85,247,0.3), 0 0 60px rgba(168,85,247,0.1);
 }
 
-/* ─── BASE STYLES (theme-aware) ───────────────────────────────── */
+/* ─── BASE STYLES ─────────────────────────────────────────────── */
 body {
   background-color: var(--bg-base);
   color: var(--text-primary);
@@ -121,70 +134,59 @@ body {
 }
 
 /* ─── UTILITY CLASSES ─────────────────────────────────────────── */
-.theme-bg-base      { background-color: var(--bg-base); }
-.theme-bg-surface   { background-color: var(--bg-surface); }
-.theme-bg-card      { background-color: var(--bg-card); }
-.theme-border       { border-color: var(--border); }
-.theme-border-accent{ border-color: var(--border-accent); }
-.theme-text         { color: var(--text-primary); }
+.theme-bg-base        { background-color: var(--bg-base); }
+.theme-bg-surface     { background-color: var(--bg-surface); }
+.theme-bg-card        { background-color: var(--bg-card); }
+.theme-border         { border-color: var(--border); }
+.theme-border-accent  { border-color: var(--border-accent); }
+.theme-text           { color: var(--text-primary); }
 .theme-text-secondary { color: var(--text-secondary); }
-.theme-text-muted   { color: var(--text-muted); }
-.theme-accent       { color: var(--accent); }
-.theme-accent-bg    { background-color: var(--accent-soft); }
-.theme-shadow       { box-shadow: var(--shadow-card); }
-.theme-shadow-glow  { box-shadow: var(--shadow-glow); }
-
-.theme-nav          { background-color: var(--nav-bg); border-color: var(--nav-border); }
-.theme-nav-active   { color: var(--nav-active); background-color: var(--nav-active-bg); }
+.theme-text-muted     { color: var(--text-muted); }
+.theme-accent         { color: var(--accent); }
+.theme-accent-bg      { background-color: var(--accent-soft); }
+.theme-shadow         { box-shadow: var(--shadow-card); }
+.theme-shadow-glow    { box-shadow: var(--shadow-glow); }
+.theme-nav            { background-color: var(--nav-bg); border-color: var(--nav-border); }
+.theme-nav-active     { color: var(--nav-active); background-color: var(--nav-active-bg); }
 
 /* Status badges */
-.status-malicious   { color: var(--status-malicious); }
-.status-monitored   { color: var(--status-monitored); }
-.status-match       { color: var(--status-match); }
-.status-mismatch    { color: var(--status-mismatch); }
-.status-tampered    { color: var(--status-tampered); }
-.status-valid       { color: var(--status-valid); }
+.status-malicious { color: var(--status-malicious); }
+.status-monitored { color: var(--status-monitored); }
+.status-match     { color: var(--status-match); }
+.status-mismatch  { color: var(--status-mismatch); }
+.status-tampered  { color: var(--status-tampered); }
+.status-valid     { color: var(--status-valid); }
 
 /* ─── ANIMATIONS ──────────────────────────────────────────────── */
 @keyframes scan {
   0%   { background-position: 0% -100%; }
   100% { background-position: 0% 100%; }
 }
-
 @keyframes neon-pulse {
   0%, 100% { box-shadow: var(--shadow-card); }
   50%       { box-shadow: var(--shadow-glow); }
 }
+.animate-scan       { animation: scan 4s linear infinite; }
+.animate-neon-pulse { animation: neon-pulse 3s ease-in-out infinite; }
 
-.animate-scan {
-  animation: scan 4s linear infinite;
-}
-
-.animate-neon-pulse {
-  animation: neon-pulse 3s ease-in-out infinite;
-}
-
-/* Gold gradient text (dark-gold theme) */
+/* Gradient texts */
 .gold-gradient-text {
   background: linear-gradient(to right, #D4AF37, #F1D279, #D4AF37);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-size: 200% auto;
 }
-
-/* Accent gradient text (light-purple / dark-neon) */
 .accent-gradient-text {
   background: linear-gradient(to right, var(--accent), color-mix(in srgb, var(--accent) 60%, white));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-/* ─── NEON THEME SPECIAL EFFECTS ──────────────────────────────── */
+/* ─── NEON SPECIAL EFFECTS ────────────────────────────────────── */
 [data-theme="dark-neon"] .theme-bg-card {
   border: 1px solid var(--border);
   box-shadow: var(--shadow-card);
 }
-
 [data-theme="dark-neon"] .theme-accent-bg {
   background: linear-gradient(135deg, rgba(168,85,247,0.15), rgba(99,102,241,0.1));
 }
@@ -193,7 +195,6 @@ body {
 [data-theme="light-purple"] .theme-bg-base {
   background: linear-gradient(135deg, #f0eeff 0%, #e8e0ff 50%, #f5f0ff 100%);
 }
-
 [data-theme="light-purple"] .theme-bg-card {
   box-shadow: 0 4px 24px rgba(139,92,246,0.08);
 }

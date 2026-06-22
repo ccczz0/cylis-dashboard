@@ -15,52 +15,53 @@ type Props = {
 };
 
 export default function DashboardPage({ tc, isLight, onViewLogs }: Props) {
+  const tickColor = isLight ? "#9ca3af" : "#6b7280";
   const tooltip = {
     backgroundColor: tc.tooltipBg,
-    border: `1px solid ${tc.tooltipBorder}`,
-    borderRadius: "10px",
-    fontSize: "clamp(11px, 0.85vw, 13px)",
-    color: isLight ? "#374151" : "#d1d5db",
-    boxShadow: "0 4px 16px rgba(0,0,0,0.35)",
+    border:          `1px solid ${tc.tooltipBorder}`,
+    borderRadius:    "0.6rem",
+    fontSize:        "0.85rem",
+    color:           isLight ? "#374151" : "#e5e7eb",
+    boxShadow:       "0 4px 16px rgba(0,0,0,0.35)",
   };
 
   return (
-    <div className="animate-in fade-in duration-400 space-y-6">
-
-
+    <div className="animate-in fade-in duration-400 space-y-5">
       {/* ── 4 Stat cards ── */}
-      <div className="grid grid-cols-2 xl:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 xl:grid-cols-4 gap-3">
         {[
-          { label: "Logs Today",    value: "12,450", delta: "+12%" },
-          { label: "Tampered Logs", value: "18",     delta: ""     },
-          { label: "Active IPs",    value: "23",     delta: "+5%"  },
-          { label: "Stability",     value: "Medium", delta: "Stable" },
+          { label: "Logs Today",    value: "12,450", delta: "+12%"  },
+          { label: "Tampered Logs", value: "18",     delta: ""      },
+          { label: "Active IPs",    value: "23",     delta: "+5%"   },
+          { label: "Stability",     value: "Medium", delta: "Stable"},
         ].map((s, i) => (
           <div
             key={i}
-            className={`rounded-2xl relative overflow-hidden ${tc.statCards[i]}`}
-            style={{ padding: "clamp(16px, 1.4vw, 24px)" }}
+            className={`rounded-lg relative overflow-hidden ${tc.statCards[i]}`}
+            style={{ padding: "0.5rem 0.75rem" }}
           >
             <div
-              className="absolute -bottom-4 -right-4 w-24 h-24 rounded-full blur-2xl opacity-30"
+              className="absolute -bottom-3 -right-3 w-12 h-12 rounded-full blur-xl opacity-20"
               style={{ background: `radial-gradient(circle,${tc.grad1},transparent)` }}
             />
+            {/* Label */}
             <p
-              className={`uppercase tracking-widest mb-2 relative z-10 ${tc.statLbl}`}
-              style={{ fontSize: "clamp(9px, 0.65vw, 11px)" }}
+              className={`uppercase tracking-[0.15em] mb-1 relative z-10 font-semibold ${tc.statLbl}`}
+              style={{ fontSize: "0.6rem" }}
             >
               {s.label}
             </p>
+            {/* Big number */}
             <h3
-              className={`font-light tracking-tight relative z-10 ${tc.statVal}`}
-              style={{ fontSize: "clamp(26px, 2.2vw, 36px)" }}
+              className={`font-bold tracking-tight relative z-10 ${tc.statVal}`}
+              style={{ fontSize: "1.2rem", lineHeight: 1.1 }}
             >
               {s.value}
             </h3>
             {s.delta && (
               <span
-                className={`relative z-10 block mt-1 ${tc.statDelta}`}
-                style={{ fontSize: "clamp(10px, 0.7vw, 12px)" }}
+                className={`relative z-10 block mt-0.5 font-semibold ${tc.statDelta}`}
+                style={{ fontSize: "0.65rem" }}
               >
                 {s.delta}
               </span>
@@ -70,87 +71,86 @@ export default function DashboardPage({ tc, isLight, onViewLogs }: Props) {
       </div>
 
       {/* ── Charts row ── */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
 
         {/* Logs Per Hour */}
-        <div className={`${tc.card} ${tc.cardHov} rounded-2xl transition-all`}
-          style={{ padding: "clamp(16px, 1.4vw, 24px)" }}>
-          <div className="flex items-center justify-between mb-2">
+        <div
+          className={`${tc.card} ${tc.cardHov} rounded-2xl transition-all`}
+          style={{ padding: "1.35rem 1.6rem" }}
+        >
+          {/* Card header */}
+          <div className="flex items-center justify-between mb-3">
             <span
-              className={`uppercase tracking-widest font-semibold ${tc.dimTxt}`}
-              style={{ fontSize: "clamp(10px, 0.75vw, 12px)" }}
+              className={`uppercase tracking-[0.15em] font-bold ${tc.dimTxt}`}
+              style={{ fontSize: "0.82rem" }}
             >
               Logs Per Hour
             </span>
             <div className="flex items-center gap-3">
-              <span
-                className={tc.muted}
-                style={{ fontSize: "clamp(10px, 0.7vw, 12px)" }}
-              >
+              <span className={tc.sub} style={{ fontSize: "0.82rem", fontWeight: 600 }}>
                 Last 24 Hours
               </span>
               <span
-                className={`font-medium px-2 py-0.5 rounded-md ${tc.btnSec}`}
-                style={{ fontSize: "clamp(10px, 0.7vw, 12px)" }}
+                className={`font-bold px-2.5 py-0.5 rounded-md ${tc.btnSec}`}
+                style={{ fontSize: "0.8rem" }}
               >
                 3 →
               </span>
             </div>
           </div>
-          <div style={{ height: "clamp(150px, 12vw, 200px)", marginTop: "12px" }}>
+
+          <div style={{ height: "11rem" }}>
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={logsPerHour} margin={{ left: -22, right: 2, top: 4, bottom: 0 }}>
+              <AreaChart data={logsPerHour} margin={{ left: -18, right: 2, top: 4, bottom: 0 }}>
                 <defs>
                   <linearGradient id="aGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%"   stopColor={tc.accent} stopOpacity={0.35} />
+                    <stop offset="0%"   stopColor={tc.accent} stopOpacity={0.4} />
                     <stop offset="100%" stopColor={tc.accent} stopOpacity={0.02} />
                   </linearGradient>
                 </defs>
-                <XAxis
-                  dataKey="t" axisLine={false} tickLine={false}
-                  tick={{ fill: isLight ? "#9ca3af" : "#52525b", fontSize: 10 }}
-                />
-                <YAxis
-                  axisLine={false} tickLine={false}
-                  tick={{ fill: isLight ? "#9ca3af" : "#52525b", fontSize: 10 }}
-                />
-                <Tooltip contentStyle={tooltip} cursor={{ stroke: tc.accent, strokeWidth: 1, strokeOpacity: 0.3 }} />
-                <Area
-                  type="monotone" dataKey="v" stroke={tc.accent} strokeWidth={2}
-                  fill="url(#aGrad)" dot={false} activeDot={{ r: 4, fill: tc.accent }}
-                />
+                <XAxis dataKey="t" axisLine={false} tickLine={false}
+                  tick={{ fill: tickColor, fontSize: 12, fontWeight: 500 }} />
+                <YAxis axisLine={false} tickLine={false}
+                  tick={{ fill: tickColor, fontSize: 12, fontWeight: 500 }} />
+                <Tooltip contentStyle={tooltip}
+                  cursor={{ stroke: tc.accent, strokeWidth: 1, strokeOpacity: 0.3 }} />
+                <Area type="monotone" dataKey="v" stroke={tc.accent} strokeWidth={2.5}
+                  fill="url(#aGrad)" dot={false} activeDot={{ r: 5, fill: tc.accent }} />
               </AreaChart>
             </ResponsiveContainer>
           </div>
-          <div className="flex items-baseline gap-2 mt-3">
+
+          <div className="flex items-baseline gap-2.5 mt-3">
             <span
-              className={`font-light ${tc.heading}`}
-              style={{ fontSize: "clamp(22px, 1.8vw, 30px)" }}
+              className={`font-bold ${tc.heading}`}
+              style={{ fontSize: "2rem", textShadow: "0 1px 8px rgba(0,0,0,0.2)" }}
             >
-              1428
+              1,428
             </span>
             <span
-              className={tc.sub}
-              style={{ fontSize: "clamp(11px, 0.8vw, 13px)" }}
+              className={`font-semibold ${tc.accentTxt}`}
+              style={{ fontSize: "0.85rem" }}
             >
-              Stable
+              Stable ↑
             </span>
           </div>
         </div>
 
         {/* Recent Attack Sources */}
-        <div className={`${tc.card} ${tc.cardHov} rounded-2xl transition-all`}
-          style={{ padding: "clamp(16px, 1.4vw, 24px)" }}>
-          <div className="flex items-center justify-between mb-2">
+        <div
+          className={`${tc.card} ${tc.cardHov} rounded-2xl transition-all`}
+          style={{ padding: "1.35rem 1.6rem" }}
+        >
+          <div className="flex items-center justify-between mb-3">
             <span
-              className={`uppercase tracking-widest font-semibold ${tc.dimTxt}`}
-              style={{ fontSize: "clamp(10px, 0.75vw, 12px)" }}
+              className={`uppercase tracking-[0.15em] font-bold ${tc.dimTxt}`}
+              style={{ fontSize: "0.82rem" }}
             >
               Recent Attack Sources
             </span>
             <span
-              className={`${tc.accentTxt} cursor-pointer`}
-              style={{ fontSize: "clamp(10px, 0.7vw, 12px)" }}
+              className={`${tc.accentTxt} cursor-pointer font-bold`}
+              style={{ fontSize: "0.82rem" }}
             >
               Last 17 ms →
             </span>
@@ -158,10 +158,12 @@ export default function DashboardPage({ tc, isLight, onViewLogs }: Props) {
 
           {/* World map */}
           <div
-            className={`relative mt-2 rounded-xl overflow-hidden ${isLight ? "bg-purple-50/50" : "bg-white/[0.02]"}`}
-            style={{ height: "clamp(100px, 9vw, 150px)" }}
+            className={`relative rounded-xl overflow-hidden
+              ${isLight ? "bg-purple-50/50" : "bg-white/[0.02]"}`}
+            style={{ height: "8rem" }}
           >
-            <svg viewBox="0 0 400 160" className="w-full h-full opacity-25" preserveAspectRatio="xMidYMid meet">
+            <svg viewBox="0 0 400 160" className="w-full h-full opacity-25"
+              preserveAspectRatio="xMidYMid meet">
               {[
                 [60,60],[80,55],[100,60],[120,65],[140,60],[70,75],[90,80],[110,75],
                 [180,55],[200,50],[220,55],[240,60],[200,70],[220,65],
@@ -169,40 +171,36 @@ export default function DashboardPage({ tc, isLight, onViewLogs }: Props) {
                 [280,55],[300,60],[320,55],[340,60],[300,70],
                 [180,110],[200,115],[220,110],[200,125],
                 [310,95],[330,100],[320,110],
-              ].map(([x, y], i) => (
+              ].map(([x,y],i) => (
                 <circle key={i} cx={x} cy={y} r="2.5" fill={tc.accent} opacity={0.6} />
               ))}
-              {[[60,60,220,55],[300,60,220,55],[180,55,220,55]].map(([x1,y1,x2,y2], i) => (
+              {([[60,60,220,55],[300,60,220,55],[180,55,220,55]] as number[][]).map(([x1,y1,x2,y2],i) => (
                 <line key={i} x1={x1} y1={y1} x2={x2} y2={y2}
                   stroke={tc.accent} strokeWidth="0.8" strokeDasharray="3,3" opacity={0.4} />
               ))}
-              <circle cx={220} cy={55} r="5" fill={tc.accent} opacity={0.8} />
-              <circle cx={220} cy={55} r="9" fill="none" stroke={tc.accent} strokeWidth="1" opacity={0.4} />
+              <circle cx={220} cy={55} r="5"  fill={tc.accent} opacity={0.8} />
+              <circle cx={220} cy={55} r="9"  fill="none" stroke={tc.accent} strokeWidth="1" opacity={0.4} />
             </svg>
           </div>
 
           {/* Top IPs */}
-          <div className="mt-3 space-y-2">
-            {attackData.slice(0, 3).map((a, i) => (
+          <div className="mt-3.5 space-y-2.5">
+            {attackData.slice(0,3).map((a,i) => (
               <div key={i} className="flex items-center gap-3">
                 <span
-                  className={`font-mono ${tc.sub} w-32 truncate`}
-                  style={{ fontSize: "clamp(10px, 0.75vw, 12px)" }}
+                  className={`font-mono font-semibold ${tc.sub} w-36 truncate`}
+                  style={{ fontSize: "0.82rem" }}
                 >
                   {a.ip}
                 </span>
-                <div
-                  className="flex-1 h-1.5 rounded-full overflow-hidden"
-                  style={{ background: `rgba(${tc.accentRgb},0.1)` }}
-                >
-                  <div
-                    className="h-full rounded-full transition-all"
-                    style={{ width: `${(a.count / 90) * 100}%`, background: tc.accent }}
-                  />
+                <div className="flex-1 rounded-full overflow-hidden"
+                  style={{ height: "0.4rem", background: `rgba(${tc.accentRgb},0.12)` }}>
+                  <div className="h-full rounded-full transition-all"
+                    style={{ width: `${(a.count/90)*100}%`, background: tc.accent }} />
                 </div>
                 <span
-                  className={tc.sub}
-                  style={{ fontSize: "clamp(10px, 0.75vw, 12px)" }}
+                  className={`font-bold ${tc.sub}`}
+                  style={{ fontSize: "0.82rem", minWidth: "2rem", textAlign: "right" }}
                 >
                   {a.count}
                 </span>
@@ -214,80 +212,80 @@ export default function DashboardPage({ tc, isLight, onViewLogs }: Props) {
 
       {/* ── Recent Logs table ── */}
       <div className={`${tc.card} ${tc.cardHov} rounded-2xl overflow-hidden transition-all`}>
+        {/* Table header bar */}
         <div
-          className="flex items-center justify-between px-5 lg:px-6 py-4"
-          style={{ borderBottom: `1px solid rgba(${tc.accentRgb},0.08)` }}
+          className="flex items-center justify-between"
+          style={{
+            padding:      "1.1rem 1.6rem",
+            borderBottom: `1px solid rgba(${tc.accentRgb},0.1)`,
+          }}
         >
           <h4
-            className={`uppercase tracking-widest font-semibold flex items-center gap-1 ${tc.dimTxt}`}
-            style={{ fontSize: "clamp(10px, 0.75vw, 12px)" }}
+            className={`uppercase tracking-[0.15em] font-bold flex items-center gap-1.5 ${tc.dimTxt}`}
+            style={{ fontSize: "0.75rem" }}
           >
-            Recent Logs <ChevronRight className="inline w-3.5 h-3.5 opacity-60" />
+            Recent Logs
+            <ChevronRight style={{ width: "0.9rem", height: "0.9rem", opacity: 0.5 }} />
           </h4>
           <button
             onClick={onViewLogs}
-            className={`uppercase tracking-widest flex items-center gap-1 ${tc.accentTxt} hover:opacity-70 transition-opacity`}
-            style={{ fontSize: "clamp(10px, 0.75vw, 12px)" }}
+            className={`uppercase tracking-widest flex items-center gap-1 font-semibold
+              ${tc.accentTxt} hover:opacity-70 transition-opacity`}
+            style={{ fontSize: "0.75rem" }}
           >
-            View All <ChevronRight className="w-3.5 h-3.5" />
+            View All
+            <ChevronRight style={{ width: "0.9rem", height: "0.9rem" }} />
           </button>
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full text-left min-w-[580px]">
+          <table className="w-full text-left" style={{ minWidth: "38rem" }}>
             <thead>
               <tr
                 className={`uppercase tracking-[0.12em] ${tc.tblHead}`}
                 style={{
-                  fontSize: "clamp(10px, 0.72vw, 12px)",
+                  fontSize:     "0.72rem",
+                  fontWeight:   700,
                   borderBottom: `1px solid rgba(${tc.accentRgb},0.08)`,
                 }}
               >
-                {["Time", "IP", "IP", "Attack Type", "Integrity", "Status"].map((h) => (
-                  <th key={h} className="px-5 lg:px-6 py-3.5 font-semibold">{h}</th>
+                {["Time","Source IP","Dest IP","Attack Type","Integrity","Status"].map(h => (
+                  <th key={h} style={{ padding: "0.85rem 1.4rem" }}>{h}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
-              {logsData.slice(0, 4).map((r, i) => (
+              {logsData.slice(0,4).map((r,i) => (
                 <tr key={i} className={`transition-colors ${tc.tblRow}`}>
-                  <td
-                    className={`px-5 lg:px-6 py-3.5 font-mono ${tc.sub}`}
-                    style={{ fontSize: "clamp(11px, 0.8vw, 13px)" }}
-                  >
-                    {r.time}
-                  </td>
-                  <td
-                    className={`px-5 lg:px-6 py-3.5 font-mono ${tc.sub}`}
-                    style={{ fontSize: "clamp(11px, 0.8vw, 13px)" }}
-                  >
-                    {r.ip1}
-                  </td>
-                  <td
-                    className={`px-5 lg:px-6 py-3.5 font-mono ${tc.sub}`}
-                    style={{ fontSize: "clamp(11px, 0.8vw, 13px)" }}
-                  >
-                    {r.ip2}
-                  </td>
-                  <td className="px-5 lg:px-6 py-3.5">
+                  {[r.time, r.ip1, r.ip2].map((v,j) => (
+                    <td key={j}
+                      className={`font-mono font-medium ${tc.sub}`}
+                      style={{ padding: "0.9rem 1.4rem", fontSize: "0.82rem" }}
+                    >
+                      {v}
+                    </td>
+                  ))}
+                  <td style={{ padding: "0.9rem 1.4rem" }}>
                     <span
-                      className={`px-2.5 py-1 rounded-md font-medium ${tc.pillType}`}
-                      style={{ fontSize: "clamp(10px, 0.72vw, 12px)" }}
+                      className={`rounded-md font-semibold ${tc.pillType}`}
+                      style={{ padding: "0.25rem 0.7rem", fontSize: "0.75rem" }}
                     >
                       {r.type}
                     </span>
                   </td>
                   <td
-                    className={`px-5 lg:px-6 py-3.5 ${r.integrity === "Valid" ? "text-emerald-500" : "text-rose-400"}`}
-                    style={{ fontSize: "clamp(11px, 0.8vw, 13px)" }}
+                    className={`font-semibold ${r.integrity === "Valid" ? "text-emerald-500" : "text-rose-400"}`}
+                    style={{ padding: "0.9rem 1.4rem", fontSize: "0.82rem" }}
                   >
                     {r.integrity}
                   </td>
-                  <td className="px-5 lg:px-6 py-3.5">
+                  <td style={{ padding: "0.9rem 1.4rem" }}>
                     <span
-                      className={`px-2.5 py-1 rounded-md font-medium
-                        ${r.statusType === "bad" ? tc.pillBad : r.statusType === "warn" ? tc.pillWarn : tc.pillGood}`}
-                      style={{ fontSize: "clamp(10px, 0.72vw, 12px)" }}
+                      className={`rounded-md font-semibold
+                        ${r.statusType==="bad"  ? tc.pillBad
+                        : r.statusType==="warn" ? tc.pillWarn
+                        : tc.pillGood}`}
+                      style={{ padding: "0.25rem 0.7rem", fontSize: "0.75rem" }}
                     >
                       {r.status}
                     </span>

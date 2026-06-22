@@ -2,95 +2,120 @@
 
 import { Search, ChevronDown } from "lucide-react";
 import { ThemeConfig } from "../lib/theme";
-import { logsPerHour, attackData, logsData } from "../lib/data"; // where needed
-type Props = {
-  tc: ThemeConfig;
-};
+import { logsData } from "../lib/data";
+
+type Props = { tc: ThemeConfig };
 
 export default function LogsPage({ tc }: Props) {
   return (
-    <div className="animate-in fade-in duration-400 space-y-4">
-      <h2 className={`text-lg lg:text-xl font-semibold ${tc.heading}`}>Logs</h2>
+    <div className="animate-in fade-in duration-400 space-y-5">
+
+      <h2
+        className={`font-bold tracking-tight ${tc.heading}`}
+        style={{ fontSize: "1.5rem" }}
+      >
+        Logs
+      </h2>
 
       <div className={`${tc.card} rounded-2xl overflow-hidden`}>
+
         {/* Filter bar */}
         <div
-          className="flex items-center gap-2 flex-wrap p-3 lg:p-4"
+          className="flex items-center gap-2.5 flex-wrap p-4"
           style={{ borderBottom: `1px solid rgba(${tc.accentRgb},0.08)` }}
         >
           <div className="relative">
-            <Search className={`absolute left-2.5 top-1/2 -translate-y-1/2 w-3 h-3 ${tc.muted}`} />
+            <Search
+              className={`absolute left-3 top-1/2 -translate-y-1/2 ${tc.muted}`}
+              style={{ width: "0.9rem", height: "0.9rem" }}
+            />
             <input
               placeholder="Filter IP / Log ID / Attack Type"
-              className={`pl-7 pr-3 py-1.5 text-[11px] rounded-lg border ${tc.input} focus:outline-none transition-all w-48 lg:w-52`}
+              className={`pl-8 pr-3 py-2 rounded-lg border ${tc.input} focus:outline-none transition-all`}
+              style={{ fontSize: "0.82rem", fontWeight: 500, width: "16rem" }}
             />
           </div>
 
           {["Time", "Attack Type", "Waited", "Surprises"].map((f) => (
             <button
               key={f}
-              className={`flex items-center gap-1 px-3 py-1.5 text-[10px] rounded-lg border font-medium transition-all ${tc.btnSec}`}
+              className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg border font-semibold transition-all ${tc.btnSec}`}
+              style={{ fontSize: "0.78rem" }}
             >
               {f === "Attack Type" && (
-                <span
-                  className="w-1.5 h-1.5 rounded-full shrink-0"
-                  style={{ background: tc.accent }}
-                />
+                <span className="w-2 h-2 rounded-full shrink-0" style={{ background: tc.accent }} />
               )}
               {f}
               {(f === "Waited" || f === "Surprises") && (
-                <span className="opacity-40">✕</span>
+                <span className="opacity-40 ml-0.5">✕</span>
               )}
             </button>
           ))}
         </div>
 
-        {/* Table — horizontally scrollable on small screens */}
+        {/* Table */}
         <div className="overflow-x-auto">
-          <table className="w-full text-left min-w-[560px]">
+          <table className="w-full text-left" style={{ minWidth: "40rem" }}>
             <thead>
               <tr
-                className={`text-[10px] uppercase tracking-[0.12em] ${tc.tblHead}`}
-                style={{ borderBottom: `1px solid rgba(${tc.accentRgb},0.08)` }}
+                className={`uppercase tracking-[0.12em] font-bold ${tc.tblHead}`}
+                style={{
+                  fontSize: "0.72rem",
+                  borderBottom: `1px solid rgba(${tc.accentRgb},0.08)`,
+                }}
               >
-                {["Time", "IP", "IP", "Attack Type", "Integrity", "Hash Status"].map((h) => (
-                  <th key={h} className="px-4 lg:px-5 py-3 font-semibold">{h}</th>
+                {["Time", "Source IP", "Dest IP", "Attack Type", "Integrity", "Hash Status"].map((h) => (
+                  <th key={h} style={{ padding: "0.85rem 1.4rem" }}>{h}</th>
                 ))}
               </tr>
             </thead>
-            <tbody className="text-xs">
+            <tbody>
               {[...logsData, ...logsData].map((r, i) => (
                 <tr key={i} className={`transition-colors ${tc.tblRow}`}>
-                  <td className={`px-4 lg:px-5 py-3 font-mono ${tc.sub}`}>{r.time}</td>
-                  <td className="px-4 lg:px-5 py-3">
-                    <span className="inline-flex items-center gap-1.5">
-                      <span
-                        className="w-1.5 h-1.5 rounded-full shrink-0"
-                        style={{ background: tc.accent }}
-                      />
-                      <span className={`font-mono ${tc.sub}`}>{r.ip1}</span>
+
+                  <td className={`font-mono font-semibold ${tc.sub}`}
+                    style={{ padding: "0.9rem 1.4rem", fontSize: "0.85rem" }}>
+                    {r.time}
+                  </td>
+
+                  <td style={{ padding: "0.9rem 1.4rem" }}>
+                    <span className="inline-flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full shrink-0" style={{ background: tc.accent }} />
+                      <span className={`font-mono font-semibold ${tc.sub}`}
+                        style={{ fontSize: "0.85rem" }}>{r.ip1}</span>
                     </span>
                   </td>
-                  <td className={`px-4 lg:px-5 py-3 font-mono ${tc.sub}`}>{r.ip2}</td>
-                  <td className="px-4 lg:px-5 py-3">
-                    <span className={`px-2 py-0.5 rounded-md text-[10px] font-medium ${tc.pillType}`}>
+
+                  <td className={`font-mono font-semibold ${tc.sub}`}
+                    style={{ padding: "0.9rem 1.4rem", fontSize: "0.85rem" }}>
+                    {r.ip2}
+                  </td>
+
+                  <td style={{ padding: "0.9rem 1.4rem" }}>
+                    <span className={`rounded-md font-bold ${tc.pillType}`}
+                      style={{ padding: "0.28rem 0.75rem", fontSize: "0.78rem" }}>
                       {r.type}
                     </span>
                   </td>
-                  <td className={`px-4 lg:px-5 py-3 ${r.integrity === "Valid" ? "text-emerald-500" : "text-rose-400"}`}>
+
+                  <td className={`font-bold ${r.integrity === "Valid" ? "text-emerald-500" : "text-rose-400"}`}
+                    style={{ padding: "0.9rem 1.4rem", fontSize: "0.85rem" }}>
                     {r.integrity}
                   </td>
-                  <td className="px-4 lg:px-5 py-3">
-                    <div className="flex items-center gap-1">
-                      <span
-                        className={`px-2 py-0.5 rounded-md text-[10px] font-medium
-                          ${r.statusType === "bad" ? tc.pillBad : r.statusType === "warn" ? tc.pillWarn : tc.pillGood}`}
-                      >
+
+                  <td style={{ padding: "0.9rem 1.4rem" }}>
+                    <div className="flex items-center gap-2">
+                      <span className={`rounded-md font-bold
+                        ${r.statusType === "bad"  ? tc.pillBad
+                        : r.statusType === "warn" ? tc.pillWarn
+                        : tc.pillGood}`}
+                        style={{ padding: "0.28rem 0.75rem", fontSize: "0.78rem" }}>
                         {r.status}
                       </span>
-                      <ChevronDown className={`w-3 h-3 ${tc.muted}`} />
+                      <ChevronDown className={tc.muted} style={{ width: "0.9rem", height: "0.9rem" }} />
                     </div>
                   </td>
+
                 </tr>
               ))}
             </tbody>

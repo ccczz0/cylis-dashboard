@@ -29,26 +29,23 @@ export default function Sidebar({ tc, view, setView, collapsed }: Props) {
     <aside
       className={`
         relative z-20 flex flex-col shrink-0 transition-all duration-300
-        ${collapsed ? "w-[64px]" : "w-[200px] lg:w-[220px]"}
+        ${collapsed ? "w-[4.5rem]" : "w-[14rem]"}
         ${tc.sidebar}
       `}
     >
-      {/* Logo */}
+      {/* ── Logo row ── */}
       <div
-        className={`
-          flex items-center h-16 shrink-0
-          ${collapsed ? "justify-center px-0" : "gap-3 px-4 lg:px-5"}
-        `}
+        className={`flex items-center shrink-0 h-[4.5rem]
+          ${collapsed ? "justify-center" : "gap-3 px-5"}`}
       >
-        {/* Logo icon — fixed vw-based size so it scales with screen */}
         <div
-          className="shrink-0 rounded-xl flex items-center justify-center font-black text-sm"
+          className="shrink-0 rounded-xl flex items-center justify-center font-black"
           style={{
-            width:  "clamp(28px, 2.2vw, 36px)",
-            height: "clamp(28px, 2.2vw, 36px)",
+            width:      "2.2rem",
+            height:     "2.2rem",
+            fontSize:   "0.85rem",
             background: `linear-gradient(135deg,${tc.accent},${tc.grad1})`,
-            color: "#fff",
-            fontSize: "clamp(11px, 0.9vw, 14px)",
+            color:      "#fff",
           }}
         >
           C
@@ -56,15 +53,15 @@ export default function Sidebar({ tc, view, setView, collapsed }: Props) {
         {!collapsed && (
           <span
             className={`font-bold tracking-[0.16em] bg-gradient-to-r ${tc.logo} bg-clip-text text-transparent`}
-            style={{ fontSize: "clamp(12px, 1vw, 15px)" }}
+            style={{ fontSize: "0.9rem" }}
           >
             CYLIS
           </span>
         )}
       </div>
 
-      {/* Nav items */}
-      <nav className="flex-1 flex flex-col gap-1 px-2 mt-2 overflow-hidden">
+      {/* ── Nav ── */}
+      <nav className="flex-1 flex flex-col gap-1 px-2 mt-1 overflow-hidden">
         {navItems.map(({ id, label, icon: Icon }) => {
           const active = view === id;
           return (
@@ -73,26 +70,22 @@ export default function Sidebar({ tc, view, setView, collapsed }: Props) {
               onClick={() => setView(id)}
               title={collapsed ? label : undefined}
               className={`
-                flex items-center rounded-xl
-                font-medium tracking-wide transition-all duration-150 w-full text-left
-                ${collapsed ? "justify-center px-0 py-3" : "gap-3 px-3 py-2.5"}
+                flex items-center rounded-xl w-full text-left
+                font-medium tracking-wide transition-all duration-150
+                ${collapsed ? "justify-center py-3.5 px-0" : "gap-3.5 px-3.5 py-3"}
                 ${active ? tc.navAct : tc.navIdle}
               `}
             >
-              {/* Icon — clamp keeps it proportional across screen sizes */}
               <Icon
                 className="shrink-0"
                 style={{
-                  width:  "clamp(16px, 1.4vw, 20px)",
-                  height: "clamp(16px, 1.4vw, 20px)",
+                  width:  "1.25rem",
+                  height: "1.25rem",
                   ...(active ? { color: tc.navDot } : {}),
                 }}
               />
               {!collapsed && (
-                <span
-                  className="truncate"
-                  style={{ fontSize: "clamp(11px, 0.85vw, 13px)" }}
-                >
+                <span className="truncate" style={{ fontSize: "0.82rem" }}>
                   {label}
                 </span>
               )}
@@ -101,12 +94,10 @@ export default function Sidebar({ tc, view, setView, collapsed }: Props) {
         })}
       </nav>
 
-      {/* Bottom — theme toggle */}
+      {/* ── Theme toggle ── */}
       <div
-        className={`
-          py-4 shrink-0
-          ${collapsed ? "flex justify-center px-0" : "px-3 lg:px-4"}
-        `}
+        className={`py-5 shrink-0
+          ${collapsed ? "flex justify-center" : "px-4"}`}
       >
         <ThemeToggle tc={tc} />
       </div>

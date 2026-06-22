@@ -2,126 +2,132 @@
 
 import { ChevronRight, Download } from "lucide-react";
 import { ThemeConfig } from "../lib/theme";
-import { logsPerHour, attackData, logsData } from "../lib/data"; // where needed
 
-type Props = {
-  tc: ThemeConfig;
-  isLight: boolean;
-};
+type Props = { tc: ThemeConfig; isLight: boolean };
 
 export default function ReportsPage({ tc, isLight }: Props) {
   return (
     <div className="animate-in fade-in duration-400 space-y-5">
-      <h2 className={`text-lg lg:text-xl font-semibold ${tc.heading}`}>Digital Forensics Report</h2>
 
-      {/* 3 summary cards — 1 col on mobile, 3 on sm+ */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 lg:gap-4">
+      <h2 className={`font-bold tracking-tight ${tc.heading}`} style={{ fontSize: "1.5rem" }}>
+        Digital Forensics Report
+      </h2>
+
+      {/* 3 summary cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {[
-          {
-            icon: "⚠️", num: "18", label: "Logs\nTampered",
-            sub: "Detected & logged tampered packets",
-          },
-          {
-            icon: "🛡️", num: "23", label: "Malicious\nIPs",
-            sub: "Recent threats via control packets",
-          },
-          {
-            icon: "🔗", num: "",   label: "Blockchain\nVerified",
-            sub: "Secured via the Logchain protocol",
-          },
+          { icon: "⚠️", num: "18", label: "Logs\nTampered",     sub: "Detected & logged tampered packets"  },
+          { icon: "🛡️", num: "23", label: "Malicious\nIPs",     sub: "Recent threats via control packets"  },
+          { icon: "🔗", num: "",   label: "Blockchain\nVerified", sub: "Secured via the Logchain protocol"  },
         ].map((c, i) => (
-          <div
-            key={i}
-            className={`${tc.repCard[i]} rounded-2xl p-4 lg:p-5 relative overflow-hidden`}
-          >
+          <div key={i} className={`${tc.repCard[i]} rounded-2xl relative overflow-hidden`}
+            style={{ padding: "1.25rem 1.5rem" }}>
             <div
-              className="absolute -bottom-4 -right-4 w-16 h-16 rounded-full blur-xl opacity-30"
+              className="absolute -bottom-4 -right-4 w-20 h-20 rounded-full blur-2xl opacity-25"
               style={{ background: `radial-gradient(circle,${tc.grad1},transparent)` }}
             />
-            <div className="flex items-start gap-3 relative z-10">
-              <div className="text-2xl mt-0.5">{c.icon}</div>
+            <div className="flex items-start gap-3.5 relative z-10">
+              <div style={{ fontSize: "1.75rem", lineHeight: 1, marginTop: "2px" }}>{c.icon}</div>
               <div>
-                {c.num && <p className="text-2xl font-light text-white">{c.num}</p>}
-                <p className="text-[12px] font-semibold text-white/90 leading-tight whitespace-pre-line">
+                {c.num && (
+                  <p className="font-bold text-white" style={{ fontSize: "1.75rem", lineHeight: 1.1 }}>
+                    {c.num}
+                  </p>
+                )}
+                <p className="font-bold text-white/90 leading-snug whitespace-pre-line"
+                  style={{ fontSize: "0.95rem", marginTop: c.num ? "0.2rem" : 0 }}>
                   {c.label}
                 </p>
-                <p className="text-[10px] mt-1 text-white/55 leading-relaxed">{c.sub}</p>
+                <p className="text-white/60 leading-relaxed"
+                  style={{ fontSize: "0.78rem", marginTop: "0.35rem" }}>
+                  {c.sub}
+                </p>
               </div>
             </div>
           </div>
         ))}
       </div>
 
-      {/* Timeline + Users — stack on mobile, side-by-side on lg */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-5">
+      {/* Timeline + Users */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
 
         {/* Timeline */}
-        <div className={`${tc.card} ${tc.cardHov} rounded-2xl p-4 lg:p-5 transition-all`}>
-          <h4 className={`text-[11px] uppercase tracking-widest font-semibold mb-4 flex items-center gap-1 ${tc.dimTxt}`}>
-            Timeline &amp; Evidence <ChevronRight className="w-3 h-3" />
+        <div className={`${tc.card} ${tc.cardHov} rounded-2xl transition-all`}
+          style={{ padding: "1.4rem 1.6rem" }}>
+          <h4 className={`uppercase tracking-[0.15em] font-bold mb-5 flex items-center gap-1.5 ${tc.dimTxt}`}
+            style={{ fontSize: "0.75rem" }}>
+            Timeline &amp; Evidence
+            <ChevronRight style={{ width: "0.9rem", height: "0.9rem" }} />
           </h4>
-          <div className="space-y-4">
+
+          <div className="space-y-5">
             {[
               { time: "11:24 AM", icon: "↓", label: "SQL Injection",                    ip: "192.168.1.15" },
               { time: "11:21 AM", icon: "↑", label: "DDOS Traffic — errored data bits", ip: ""            },
               { time: "11:40 AM", icon: "◆", label: "Block #322983 anchored",            ip: ""            },
             ].map((item, i) => (
-              <div key={i} className="relative pl-8 group">
+              <div key={i} className="relative pl-10">
                 {i < 2 && (
-                  <div
-                    className="absolute left-[11px] top-5 bottom-[-16px] w-px"
-                    style={{ background: `linear-gradient(to bottom,${tc.accent}50,transparent)` }}
-                  />
+                  <div className="absolute left-[13px] top-6 bottom-[-20px] w-px"
+                    style={{ background: `linear-gradient(to bottom,${tc.accent}50,transparent)` }} />
                 )}
                 <div
-                  className={`absolute left-0 top-0.5 w-[22px] h-[22px] rounded-full flex items-center justify-center text-[9px] font-bold transition-all ${tc.dot}`}
-                  style={{ background: `linear-gradient(135deg,${tc.accent},${tc.grad2})`, color: "#fff" }}
+                  className="absolute left-0 top-0.5 rounded-full flex items-center justify-center font-bold text-white"
+                  style={{
+                    width: "1.6rem", height: "1.6rem", fontSize: "0.72rem",
+                    background: `linear-gradient(135deg,${tc.accent},${tc.grad2})`,
+                  }}
                 >
                   {item.icon}
                 </div>
-                <div>
-                  <p className={`text-[10px] font-mono ${tc.accentTxt}`}>{item.time}</p>
-                  <p className={`text-[12px] ${tc.sub} mt-0.5`}>
-                    {item.label}
-                    {item.ip && (
-                      <span className={`font-mono ml-1 ${tc.accentTxt}`}>{item.ip}</span>
-                    )}
-                  </p>
-                </div>
+                <p className={`font-mono font-bold ${tc.accentTxt}`} style={{ fontSize: "0.78rem" }}>
+                  {item.time}
+                </p>
+                <p className={`font-semibold ${tc.sub} mt-0.5`} style={{ fontSize: "0.9rem" }}>
+                  {item.label}
+                  {item.ip && (
+                    <span className={`font-mono ml-1.5 ${tc.accentTxt}`}>{item.ip}</span>
+                  )}
+                </p>
               </div>
             ))}
           </div>
         </div>
 
         {/* Users & Export */}
-        <div className={`${tc.card} ${tc.cardHov} rounded-2xl p-4 lg:p-5 transition-all`}>
-          <h4 className={`text-[11px] uppercase tracking-widest font-semibold mb-4 ${tc.dimTxt}`}>
+        <div className={`${tc.card} ${tc.cardHov} rounded-2xl transition-all`}
+          style={{ padding: "1.4rem 1.6rem" }}>
+          <h4 className={`uppercase tracking-[0.15em] font-bold mb-5 ${tc.dimTxt}`}
+            style={{ fontSize: "0.75rem" }}>
             Users &amp; Export
           </h4>
-          <div className="space-y-2.5 text-[12px]">
+
+          <div className="space-y-1">
             {[
-              { role: "Adam R.",    title: "Admin Investigator" },
-              { role: "Dan H.",     title: "Mentor" },
-              { role: "Loam F.",    title: "Analyst" },
+              { role: "Adam R.", title: "Admin Investigator" },
+              { role: "Dan H.",  title: "Mentor"             },
+              { role: "Loam F.", title: "Analyst"            },
             ].map((u, i) => (
-              <div
-                key={i}
-                className="flex justify-between items-center py-2"
-                style={{ borderBottom: `1px solid rgba(${tc.accentRgb},0.07)` }}
-              >
-                <span className={`font-medium ${isLight ? "text-gray-700" : "text-gray-300"}`}>
+              <div key={i} className="flex justify-between items-center py-3"
+                style={{ borderBottom: `1px solid rgba(${tc.accentRgb},0.08)` }}>
+                <span className={`font-bold ${isLight ? "text-gray-700" : "text-gray-200"}`}
+                  style={{ fontSize: "0.92rem" }}>
                   {u.role}
                 </span>
-                <span className={`text-[11px] ${tc.accentTxt} flex items-center gap-1`}>
-                  {u.title} <ChevronRight className="w-3 h-3" />
+                <span className={`font-semibold flex items-center gap-1 ${tc.accentTxt}`}
+                  style={{ fontSize: "0.82rem" }}>
+                  {u.title}
+                  <ChevronRight style={{ width: "0.9rem", height: "0.9rem" }} />
                 </span>
               </div>
             ))}
           </div>
+
           <button
-            className={`mt-5 w-full py-2.5 rounded-xl text-[12px] font-semibold flex items-center justify-center gap-2 transition-all ${tc.btnPri}`}
+            className={`mt-5 w-full rounded-xl font-bold flex items-center justify-center gap-2 transition-all ${tc.btnPri}`}
+            style={{ padding: "0.75rem", fontSize: "0.9rem" }}
           >
-            <Download className="w-3.5 h-3.5" />
+            <Download style={{ width: "1rem", height: "1rem" }} />
             Export PDF
           </button>
         </div>

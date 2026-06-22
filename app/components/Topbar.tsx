@@ -27,90 +27,70 @@ export default function Topbar({ tc, view, collapsed, onToggleCollapse }: Props)
 
   return (
     <header
-      className={`flex items-center justify-between px-5 lg:px-7 shrink-0 ${tc.topbar}`}
-      style={{ height: "clamp(56px, 4.5vw, 72px)" }}
+      className={`flex items-center justify-between shrink-0 px-6 ${tc.topbar}`}
+      style={{ height: "4.5rem" }}
     >
-      {/* Left — hamburger + breadcrumb */}
+      {/* Left */}
       <div className="flex items-center gap-4 min-w-0">
         <button
           onClick={onToggleCollapse}
           className={`${tc.sub} hover:opacity-100 transition-opacity shrink-0`}
           aria-label="Toggle sidebar"
         >
-          <Menu style={{ width: "clamp(18px, 1.4vw, 22px)", height: "clamp(18px, 1.4vw, 22px)" }} />
+          <Menu style={{ width: "1.3rem", height: "1.3rem" }} />
         </button>
 
-        <div className={`flex items-center gap-2 min-w-0 ${tc.sub}`}>
-          <span
-            className={`${tc.accentTxt} font-semibold shrink-0`}
-            style={{ fontSize: "clamp(12px, 0.9vw, 15px)" }}
-          >
+        <div className={`flex items-center gap-2 min-w-0 ${tc.sub}`}
+          style={{ fontSize: "0.82rem" }}>
+          <span className={`${tc.accentTxt} font-semibold shrink-0`}>
             Dashboard
           </span>
           {view !== "dashboard" && (
             <>
-              <ChevronRight
-                className="opacity-40 shrink-0"
-                style={{ width: "clamp(13px, 1vw, 16px)", height: "clamp(13px, 1vw, 16px)" }}
-              />
-              <span
-                className="opacity-60 truncate"
-                style={{ fontSize: "clamp(12px, 0.9vw, 15px)" }}
-              >
-                {breadLabel}
-              </span>
+              <ChevronRight className="opacity-40 shrink-0" style={{ width: "0.85rem", height: "0.85rem" }} />
+              <span className="opacity-60 truncate">{breadLabel}</span>
             </>
           )}
           {view === "verify" && (
             <>
-              <ChevronRight
-                className="opacity-40 shrink-0"
-                style={{ width: "clamp(13px, 1vw, 16px)", height: "clamp(13px, 1vw, 16px)" }}
-              />
-              <span
-                className="opacity-60 truncate"
-                style={{ fontSize: "clamp(12px, 0.9vw, 15px)" }}
-              >
-                Logs
-              </span>
+              <ChevronRight className="opacity-40 shrink-0" style={{ width: "0.85rem", height: "0.85rem" }} />
+              <span className="opacity-60 truncate">Logs</span>
             </>
           )}
         </div>
       </div>
 
-      {/* Right — actions */}
+      {/* Right */}
       <div className="flex items-center gap-4 shrink-0">
         <ThemeToggle tc={tc} />
 
         <Search
           className={`${tc.sub} hover:opacity-100 cursor-pointer transition-opacity`}
-          style={{ width: "clamp(17px, 1.3vw, 21px)", height: "clamp(17px, 1.3vw, 21px)" }}
+          style={{ width: "1.2rem", height: "1.2rem" }}
         />
 
         <div className="relative cursor-pointer">
           <Bell
             className={`${tc.sub} hover:opacity-100 transition-opacity`}
-            style={{ width: "clamp(17px, 1.3vw, 21px)", height: "clamp(17px, 1.3vw, 21px)" }}
+            style={{ width: "1.2rem", height: "1.2rem" }}
           />
           <span
-            className={`absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full ${tc.bellDot}`}
+            className={`absolute -top-0.5 -right-0.5 rounded-full ${tc.bellDot}`}
+            style={{ width: "0.5rem", height: "0.5rem" }}
           />
         </div>
 
         <MessageSquare
           className={`${tc.sub} hover:opacity-100 cursor-pointer transition-opacity`}
-          style={{ width: "clamp(17px, 1.3vw, 21px)", height: "clamp(17px, 1.3vw, 21px)" }}
+          style={{ width: "1.2rem", height: "1.2rem" }}
         />
 
-        {/* Avatar */}
         <div
-          className={`rounded-full bg-gradient-to-b ${tc.userRing} border flex items-center justify-center cursor-pointer hover:scale-105 transition-all`}
-          style={{
-            width:  "clamp(30px, 2.2vw, 38px)",
-            height: "clamp(30px, 2.2vw, 38px)",
-          }}
+          className={`rounded-full bg-gradient-to-b ${tc.userRing} border
+            flex items-center justify-center cursor-pointer hover:scale-105 transition-all`}
+          style={{ width: "2.4rem", height: "2.4rem" }}
         >
-          <User style={{ width: "clamp(14px, 1.1vw, 18px)", height: "clamp(14px, 1.1vw, 18px)" }} />
+          <User style={{ width: "1.1rem", height: "1.1rem" }} />
         </div>
       </div>
     </header>
